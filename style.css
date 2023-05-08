@@ -48,6 +48,7 @@ body {
     font-size: 16px;
     display: flex;
     justify-content: space-between;
+    color: white;
   }
 
   .comment-footer {
@@ -134,4 +135,48 @@ body {
 
   .add-form-button:hover {
     opacity: 0.9;
+  }
+
+  .login-link{
+    color: #ffffff;
+    text-decoration: underline;
+  }
+
+  .login-form{
+    padding: 20px;
+    margin-top: 48px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .login-form-name,
+  .login-form-password,
+  .login-form-login {
+    width: 500px;
+    padding: 11px 22px;
+    margin-top: 15px;
+
+  }
+
+  .login-form-button{
+    width: 500px;
+  }
+
+  .login-form-button {
+    border: none;
+    background-color:  rgba(28,28,28,0);
+    cursor: pointer;
+  }
+
+  .login-form-registration,
+  .login-form-enter {
+    margin-top: 15px;
+    text-decoration: underline;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .autorization-link {
+    display: flex;
+    justify-content: center;
   }

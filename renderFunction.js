@@ -3,20 +3,12 @@ import { fetchAndRenderCommentsTwo } from "./script.js";
 import { postComments } from "./api.js";
 import { renderLoginComponent } from "./login.js";
 
-let token = "Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k";
+export let token = "Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k";
 token = null;
 
 // рендер функция
 export const renderComments = () => {
   const appEl = document.getElementById("app")
-  if (!token) {
-    renderLoginComponent({ appEl, setToken: (newToken) =>{
-      token = newToken
-      },
-      fetchAndRenderCommentsTwo,
-      });
-      return;
-  }
   const commentsHtml = window.comments.map((comment, index) => {
     return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
     data-date= "${comment.date}" data-counter="${comment.likesCounter}">
@@ -33,13 +25,14 @@ export const renderComments = () => {
             <div class="likes">
               <span  class="likes-counter" data-counter="${comment.likesCounter}">${comment.likesCounter}</span>
               <button class="like-button" ></button>
-            <button data-index='${index}' class="delete-button">Удалить</button>
             </div>
           </div>
-        </li>`;
-    }).join(''); 
+        </li>
+        <div class="autorization-link"><h3 class="comment-header">Чтобы добавить комментарий,&nbsp; <button id="login-form-button" class="comment-header login-form-button">авторизуйтесь</button></h3></div>`;
+    }).join('');
   initEventListeners();
-  const appHtml = `<div class="container">
+  if (!token) {
+    const appHtml = `<div class="container">
        <ul id="comments" class="comments">${commentsHtml} </ul>
     <div id= "addFormLoading" class="addFormLoading">
       <div id= "add-form" class="add-form">
@@ -60,45 +53,21 @@ export const renderComments = () => {
           <button id="add-button" class="add-form-button">Написать</button>
         </div>
       </div>`
-  // appEl.innerHTML = appHtml;
-//   const appHtml = `<div class="container">
-//   <div id="add-form" class="add-form">
-//     <input type="text"
-//     id="name-input" 
-//     class="add-form-name" 
-//     placeholder="Введите логин" />
-//     <br>
-//     <input type="text"
-//     id="name-input" 
-//     class="add-form-name" 
-//     placeholder="Введите пароль" />
-//     <div class="add-form-row">
-//       <button id="add-button" class="add-form-button">Войти</button>
-//     </div>
-// </div>
-// <br>
-// ${commentsHtml}
-// <div class="container">
-//   <ul id="comments" class="comments">
-//   </ul>
-//   <div id="add-form" class="add-form">
-//     <input type="text" id="name-input" class="add-form-name" placeholder="Введите ваше имя" />
-//     <textarea type="textarea" id="comment-input" class="add-form-text" placeholder="Введите ваш коментарий"
-//       rows="4"></textarea>
-//     <div class="add-form-row">
-//       <button id="add-button" class="add-form-button">Написать</button>
-//     </div>
-//   </div>
-// </div>`
 initEventListeners();
 
 appEl.innerHTML = appHtml;
 
+}
 const buttonElement = document.getElementById("add-button");
 const commentsElement = document.getElementById("comments");
 const nameInputElement = document.getElementById("name-input");
 const commentInputElement = document.getElementById("comment-input");
 let addForm = document.getElementById("add-form");
+const loginForm = document.getElementById("login-form-button")
+
+loginForm.addEventListener("click", () => {
+  return renderLoginComponent();
+})
 
 // проверка ввода
 buttonElement.addEventListener("click", () => {

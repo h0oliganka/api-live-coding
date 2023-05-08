@@ -1,5 +1,5 @@
 import { newDate } from "./script.js";
-import { renderComments } from "./renderFunction.js";
+import { renderComments, token } from "./renderFunction.js";
 import { initEventListeners } from "./script.js";
 
 const commentsElement = document.getElementById("comments");
@@ -15,8 +15,8 @@ export function getCommentsLoading(token) {
     }
     .then((response) => {
       if (response.status === 401) {
-        // token = prompt("Введите верный пароль");
-        // fetchTodosAndRender();
+        token = prompt("Введите верный пароль");
+        fetchTodosAndRender();
         throw new Error("Нет авторизации");
       }
       return response.json();
@@ -117,6 +117,7 @@ export function login(login, password) {
       body: JSON.stringify({ 
       login,
       password,
+      token,
       })
   }).then((response) => {
         return response.json();

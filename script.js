@@ -63,5 +63,5 @@ export function newDate() {
   let str = myDay + '.' + myMonth + '.' + myYear + '.' + myHours + '.' + myMinute;
   return str;
 }
-renderComments();
+// renderComments();
 initEventListeners();
