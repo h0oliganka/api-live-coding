@@ -5,10 +5,22 @@ import { initEventListeners } from "./script.js";
 const commentsElement = document.getElementById("comments");
 export let host = "https://webdev-hw-api.vercel.app/api/v1/dasha-salova/comments";
 
+
 // GET
-export function getCommentsLoading(comments) {
+export function getCommentsLoading(token) {
   return fetch(host, {
     method: "GET",
+    headers: {
+      Authorization: token,
+    }
+    .then((response) => {
+      if (response.status === 401) {
+        // token = prompt("Введите верный пароль");
+        // fetchTodosAndRender();
+        throw new Error("Нет авторизации");
+      }
+      return response.json();
+    })
   }).then((response) => {
     const jsonPromise = response.json();
     jsonPromise.then((responseData) => {
@@ -40,9 +52,12 @@ export function getCommentsLoading(comments) {
 }
 
 // 2 GET
-export function getComments(comments) {
+export function getComments(token) {
   return fetch(host, {
     method: "GET",
+    headers: {
+      Authorization: token,
+    },
   }).then((response) => {
     const jsonPromise = response.json();
 
@@ -69,9 +84,12 @@ export function getComments(comments) {
 
 
 // POST
-export function postComments({ nameInputElement, commentInputElement }) {
+export function postComments({ nameInputElement, commentInputElement, token }) {
   return fetch(host, {
     method: "POST",
+    headers: {
+      Authorization: token,
+    },
     body: JSON.stringify({
       name: nameInputElement.value,
       text: commentInputElement.value,
@@ -89,7 +107,18 @@ export function postComments({ nameInputElement, commentInputElement }) {
       throw new Error('Сервер сломался, попробуй позже');
     } if (response.status === 400) {
       alert("Имя и комментарий должны быть не короче 3 символов");
-
     }
   })
 }
+
+export function login(login, password) {
+  return fetch( "https://webdev-hw-api.vercel.app/api/user/login", {
+      method: "POST",
+      body: JSON.stringify({ 
+      login,
+      password,
+      })
+  }).then((response) => {
+        return response.json();
+    })
+  }

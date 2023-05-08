@@ -6,22 +6,20 @@ const commentsElement = document.getElementById("comments");
 const nameInputElement = document.getElementById("name-input");
 const commentInputElement = document.getElementById("comment-input");
 let addForm = document.getElementById("add-form");
+const commentsLoading = document.getElementById("commentsLoading")
 
-// GET
-export const fetchAndRenderComment = () => {
-  let commentsLoading = document.createElement('div');
-  commentsLoading.id = 'commentsLoading';
-  commentsLoading.innerHTML = '<p>Комментарии загружается...</p>';
-  commentsElement.parentNode.replaceChild(commentsLoading, commentsElement);
-  return getCommentsLoading();
-}
+// // GET
+// export const fetchAndRenderComment = () => {
+//   commentsElement.parentNode.replaceChild(commentsLoading);
+//   return getCommentsLoading();
+// }
 
 // 2 get
 export const fetchAndRenderCommentsTwo = () => {
   return getComments();
 }
 
-fetchAndRenderComment();
+// fetchAndRenderComment();
 fetchAndRenderCommentsTwo();
 
 // кнопка лайка и счетчик
@@ -65,64 +63,5 @@ export function newDate() {
   let str = myDay + '.' + myMonth + '.' + myYear + '.' + myHours + '.' + myMinute;
   return str;
 }
-
-
-// проверка ввода
-buttonElement.addEventListener("click", () => {
-  nameInputElement.classList.remove('error');
-
-  if (nameInputElement.value === '') {
-    nameInputElement.classList.add('error');
-    return;
-  }
-
-  commentInputElement.classList.remove('error');
-
-  if (commentInputElement.value === '') {
-    commentInputElement.classList.add('error');
-    return;
-  }
-
-  // рендер нового коммента
-  comments.push({
-    name: nameInputElement.value
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;"),
-    date: newDate(),
-    text: commentInputElement.value
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;"),
-    likesCounter: 0,
-  });
-  addForm.parentNode.appendChild(addFormLoading, addForm);
-
-  // POST
-  const postAndRenderComments = () => {
-    addForm.parentNode.appendChild(addFormLoading, addForm);
-
-    return postComments({ nameInputElement, commentInputElement })
-      .then(() => {
-        return addFormLoading.parentNode.appendChild(addForm, addFormLoading);
-      })
-      .then(() => {
-        return fetchAndRenderCommentsTwo();
-
-      }).then(() => {
-        return addFormLoading.parentNode.appendChild(addForm, addFormLoading);
-
-      }).catch((error) => {
-        addFormLoading.parentNode.appendChild(addForm, addFormLoading);
-        alert('Ошибка интернет соединения');
-        console.warn(error);
-      });
-  }
-  postAndRenderComments();
-  renderComments();
-  initEventListeners();
-});
 renderComments();
 initEventListeners();
