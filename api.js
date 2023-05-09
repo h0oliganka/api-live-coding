@@ -1,10 +1,9 @@
 import { newDate } from "./script.js";
-import { renderComments, token } from "./renderFunction.js";
+import { renderComments } from "./renderFunction.js";
 import { initEventListeners } from "./script.js";
 
 const commentsElement = document.getElementById("comments");
 export let host = "https://webdev-hw-api.vercel.app/api/v1/dasha-salova/comments";
-
 
 // GET
 export function getCommentsLoading(token) {
@@ -13,33 +12,30 @@ export function getCommentsLoading(token) {
     headers: {
       Authorization: token,
     }
-    .then((response) => {
+  }).then((response) => {
       if (response.status === 401) {
-        token = prompt("Введите верный пароль");
-        fetchTodosAndRender();
+        // token = prompt("Введите верный пароль");
+        // getCommentsLoading();
         throw new Error("Нет авторизации");
       }
-      return response.json();
-    })
-  }).then((response) => {
-    const jsonPromise = response.json();
-    jsonPromise.then((responseData) => {
-
+      const jsonPromise = response.json();
+      jsonPromise.then((responseData) => {
+      
       let appComments = responseData.comments.map((comment) => {
-        return {
-          name: comment.author.name,
-          date: newDate(),
-          text: comment.text,
-          likesCounter: 0,
-
-        }
-
-      })
-      window.comments = appComments;
-      renderComments();
-      initEventListeners();
-      console.log(window.comments);
-    });
+      return {
+        name: comment.author.name,
+        date: data (comment.date),
+        text: comment.text,
+        likesCounter: 0,
+        
+      }
+      
+        })
+       window .comments = appComments;
+        renderComments();
+        initEventListeners();
+        
+      });
 
   }).then(() => {
     return commentsLoading.parentNode.replaceChild(commentsElement, commentsLoading);
@@ -87,9 +83,6 @@ export function getComments(token) {
 export function postComments({ nameInputElement, commentInputElement, token }) {
   return fetch(host, {
     method: "POST",
-    headers: {
-      Authorization: token,
-    },
     body: JSON.stringify({
       name: nameInputElement.value,
       text: commentInputElement.value,
@@ -97,6 +90,9 @@ export function postComments({ nameInputElement, commentInputElement, token }) {
       likesCounter: 0,
       forceError: true,
     }),
+    headers: {
+      Authorization: token,
+    },
   }).then((response) => {
     if (response.status === 201) {
       nameInputElement.value = "";
@@ -111,7 +107,7 @@ export function postComments({ nameInputElement, commentInputElement, token }) {
   })
 }
 
-export function login(login, password) {
+export function loginUser({login, password, token}) {
   return fetch( "https://webdev-hw-api.vercel.app/api/user/login", {
       method: "POST",
       body: JSON.stringify({ 

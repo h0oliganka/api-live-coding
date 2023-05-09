@@ -9,6 +9,18 @@ token = null;
 // рендер функция
 export const renderComments = () => {
   const appEl = document.getElementById("app")
+  if (!token) {
+    
+    renderLoginComponent({ appEl, setToken: (newToken) =>{
+    token = newToken
+    },
+    fetchAndRenderCommentsTwo,
+    });
+
+    
+
+    return;
+  }
   const commentsHtml = window.comments.map((comment, index) => {
     return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
     data-date= "${comment.date}" data-counter="${comment.likesCounter}">
@@ -30,8 +42,7 @@ export const renderComments = () => {
         </li>
         <div class="autorization-link"><h3 class="comment-header">Чтобы добавить комментарий,&nbsp; <button id="login-form-button" class="comment-header login-form-button">авторизуйтесь</button></h3></div>`;
     }).join('');
-  initEventListeners();
-  if (!token) {
+    
     const appHtml = `<div class="container">
        <ul id="comments" class="comments">${commentsHtml} </ul>
     <div id= "addFormLoading" class="addFormLoading">
@@ -57,7 +68,6 @@ initEventListeners();
 
 appEl.innerHTML = appHtml;
 
-}
 const buttonElement = document.getElementById("add-button");
 const commentsElement = document.getElementById("comments");
 const nameInputElement = document.getElementById("name-input");
@@ -65,9 +75,7 @@ const commentInputElement = document.getElementById("comment-input");
 let addForm = document.getElementById("add-form");
 const loginForm = document.getElementById("login-form-button")
 
-loginForm.addEventListener("click", () => {
-  return renderLoginComponent();
-})
+loginForm.addEventListener("click", renderLoginComponent())
 
 // проверка ввода
 buttonElement.addEventListener("click", () => {
