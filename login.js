@@ -2,7 +2,7 @@ import { login } from "./api.js";
 import{fetchAndRenderCommentsTwo} from "./script.js";
 import {renderComments,} from "./renderFunction.js";
 
-const loginButton = document.getElementById("login-button")
+
 
 export function renderLoginComponent( appEl, setToken){
     const  appHtml = `<div class="container">
@@ -28,6 +28,7 @@ export function renderLoginComponent( appEl, setToken){
           </div>
           </div>
          </div>`
+        const loginButton = document.getElementById("login-button")
         loginButton.addEventListener('click',() => {
         login
         ({
