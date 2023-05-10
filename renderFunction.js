@@ -16,12 +16,9 @@ export const renderComments = () => {
     },
     fetchAndRenderCommentsTwo,
     });
-
-    
-
     return;
   }
-  const commentsHtml = window.comments.map((comment, index) => {
+  const commentsHtml = window.comments.map((comment) => {
     return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
     data-date= "${comment.date}" data-counter="${comment.likesCounter}">
           <div class="comment-header">
@@ -75,7 +72,7 @@ const commentInputElement = document.getElementById("comment-input");
 let addForm = document.getElementById("add-form");
 const loginForm = document.getElementById("login-form-button")
 
-loginForm.addEventListener("click", renderLoginComponent())
+// loginForm.addEventListener("click", renderLoginComponent())
 
 // проверка ввода
 buttonElement.addEventListener("click", () => {
@@ -131,6 +128,10 @@ buttonElement.addEventListener("click", () => {
       });
   }
   postAndRenderComments();
+
+  nameInputElement.value = '';
+  commentInputElement.value = '';
+
   renderComments();
   initEventListeners();
 });

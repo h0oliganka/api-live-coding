@@ -154,8 +154,8 @@ body {
   .login-form-login {
     width: 500px;
     padding: 11px 22px;
-    margin-top: 15px;
-
+    border-radius: 10px;
+    min-height: 30px;
   }
 
   .login-form-button{
@@ -166,6 +166,7 @@ body {
     border: none;
     background-color:  rgba(28,28,28,0);
     cursor: pointer;
+    border-radius: 18px;
   }
 
   .login-form-registration,

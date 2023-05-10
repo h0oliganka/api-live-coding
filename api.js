@@ -107,15 +107,33 @@ export function postComments({ nameInputElement, commentInputElement, token }) {
   })
 }
 
-export function loginUser({login, password, token}) {
+export function loginUser({login, password}) {
   return fetch( "https://webdev-hw-api.vercel.app/api/user/login", {
       method: "POST",
       body: JSON.stringify({ 
       login,
       password,
-      token,
       })
   }).then((response) => {
+    if (response.status === 400) {
+      throw new Error('Неверный логин или пароль');
+    }
         return response.json();
     })
   }
+
+  export function registerUser({name, login, password}) {
+    return fetch( "https://webdev-hw-api.vercel.app/api/user", {
+        method: "POST",
+        body: JSON.stringify({
+        name,
+        login,
+        password
+        })
+    }).then((response) => {
+      if (response.status === 400) {
+        throw new Error('Такой пользователь уже существует');
+      }
+          return response.json();
+      })
+    }
