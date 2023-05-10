@@ -13,29 +13,29 @@ export function getCommentsLoading(token) {
       Authorization: token,
     }
   }).then((response) => {
-      if (response.status === 401) {
-        // token = prompt("Введите верный пароль");
-        // getCommentsLoading();
-        throw new Error("Нет авторизации");
-      }
-      const jsonPromise = response.json();
-      jsonPromise.then((responseData) => {
-      
+    if (response.status === 401) {
+      // token = prompt("Введите верный пароль");
+      // getCommentsLoading();
+      throw new Error("Нет авторизации");
+    }
+    const jsonPromise = response.json();
+    jsonPromise.then((responseData) => {
+
       let appComments = responseData.comments.map((comment) => {
-      return {
-        name: comment.author.name,
-        date: newDate(),
-        text: comment.text,
-        likesCounter: 0,
-        
-      }
-      
-        })
-       window .comments = appComments;
-        renderComments();
-        initEventListeners();
-        
-      });
+        return {
+          name: comment.author.name,
+          date: newDate(),
+          text: comment.text,
+          likesCounter: 0,
+
+        }
+
+      })
+      window.comments = appComments;
+      renderComments();
+      initEventListeners();
+
+    });
 
   }).then(() => {
     return commentsLoading.parentNode.replaceChild(commentsElement, commentsLoading);
@@ -106,36 +106,37 @@ export function postComments({ nameInputElement, commentInputElement, token }) {
     }
   })
 }
-
-export function loginUser({login, password, token}) {
-  return fetch( "https://webdev-hw-api.vercel.app/api/user/login", {
-      method: "POST",
-      body: JSON.stringify({ 
+//вход
+export function loginUser({ login, password, token }) {
+  return fetch("https://webdev-hw-api.vercel.app/api/user/login", {
+    method: "POST",
+    body: JSON.stringify({
       login,
       password,
       token,
-      })
+    })
   }).then((response) => {
     if (response.status === 400) {
       throw new Error('Неверный логин или пароль');
     }
-        return response.json();
-    })
-  }
+    return response.json();
+  })
+}
 
-  export function registerUser({name, login, password, token}) {
-    return fetch( "https://webdev-hw-api.vercel.app/api/user", {
-        method: "POST",
-        body: JSON.stringify({
-        name,
-        login,
-        password,
-        token,
-        })
-    }).then((response) => {
-      if (response.status === 400) {
-        throw new Error('Такой пользователь уже существует');
-      }
-          return response.json();
-      })
+//регистрация
+export function registerUser({ name, login, password, token }) {
+  return fetch("https://webdev-hw-api.vercel.app/api/user", {
+    method: "POST",
+    body: JSON.stringify({
+      name,
+      login,
+      password,
+      token,
+    })
+  }).then((response) => {
+    if (response.status === 400) {
+      throw new Error('Такой пользователь уже существует');
     }
+    return response.json();
+  })
+}

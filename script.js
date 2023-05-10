@@ -41,9 +41,7 @@ export const initEventListeners = () => {
     commentAnswer.addEventListener('click', () => {
       const text = commentAnswer.dataset.text;
       const nameComment = commentAnswer.dataset.name;
-      // commentInputElement.value = ">" + text + "\n" + nameComment;
-      renderComments();
-      initEventListeners();
+      commentInputElement.value = ">" + text + "\n" + nameComment;
     });
   }
 }

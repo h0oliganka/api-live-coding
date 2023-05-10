@@ -31,10 +31,9 @@ export const renderComments = () => {
         </li>`;
     }).join(''); 
     
- const appHtml = `<div class="container">
-
-       <ul id="comments" class="comments">${commentsHtml} </ul>
-      
+ const appHtml = `
+    <div class="container">
+    <ul id="comments" class="comments">${commentsHtml} </ul>
     <div> Что бы добавить комментарий, <a id='authorization-link' href="#">авторизуйтесь</a></div>`
     
     appEl.innerHTML = appHtml;
@@ -46,7 +45,6 @@ export const renderComments = () => {
         fetchAndRenderCommentsTwo, 
         }); 
     });
-    
        return;   
 }
 const commentsHtml = window.comments.map((comment) => {
@@ -90,18 +88,14 @@ const commentsHtml = window.comments.map((comment) => {
           <button id="add-button" class="add-form-button">Написать</button>
         </div>
       </div>`
+
 initEventListeners();
 
 appEl.innerHTML = appHtml;
 
 const buttonElement = document.getElementById("add-button");
-const commentsElement = document.getElementById("comments");
 const nameInputElement = document.getElementById("name-input");
 const commentInputElement = document.getElementById("comment-input");
-let addForm = document.getElementById("add-form");
-const loginForm = document.getElementById("login-form-button")
-
-// loginForm.addEventListener("click", renderLoginComponent())
 
 // проверка ввода
 buttonElement.addEventListener("click", () => {
