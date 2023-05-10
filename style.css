@@ -180,4 +180,5 @@ body {
   .autorization-link {
     display: flex;
     justify-content: center;
+    color: white;
   }

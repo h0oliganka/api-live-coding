@@ -10,15 +10,7 @@ token = null;
 export const renderComments = () => {
   const appEl = document.getElementById("app")
   if (!token) {
-    
-    renderLoginComponent({ appEl, setToken: (newToken) =>{
-    token = newToken
-    },
-    fetchAndRenderCommentsTwo,
-    });
-    return;
-  }
-  const commentsHtml = window.comments.map((comment) => {
+    const commentsHtml = window.comments.map((comment) => {
     return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
     data-date= "${comment.date}" data-counter="${comment.likesCounter}">
           <div class="comment-header">
@@ -36,11 +28,48 @@ export const renderComments = () => {
               <button class="like-button" ></button>
             </div>
           </div>
-        </li>
-        <div class="autorization-link"><h3 class="comment-header">Чтобы добавить комментарий,&nbsp; <button id="login-form-button" class="comment-header login-form-button">авторизуйтесь</button></h3></div>`;
-    }).join('');
+        </li>`;
+    }).join(''); 
     
-    const appHtml = `<div class="container">
+ const appHtml = `<div class="container">
+
+       <ul id="comments" class="comments">${commentsHtml} </ul>
+      
+    <div> Что бы добавить комментарий, <a id='authorization-link' href="#">авторизуйтесь</a></div>`
+    
+    appEl.innerHTML = appHtml;
+    
+    document.getElementById('authorization-link').addEventListener('click',() =>{
+      renderLoginComponent({ appEl, setToken: (newToken) =>{
+        token = newToken
+        },
+        fetchAndRenderCommentsTwo, 
+        }); 
+    });
+    
+       return;   
+}
+const commentsHtml = window.comments.map((comment) => {
+  return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
+  data-date= "${comment.date}" data-counter="${comment.likesCounter}">
+        <div class="comment-header">
+          <div>${comment.name}</div>
+          <div>${comment.date}</div>
+        </div>
+        <div class="comment-body">
+          <div  class="comment-text" >
+           ${comment.text}
+          </div>
+        </div>
+        <div class="comment-footer">
+          <div class="likes">
+            <span  class="likes-counter" data-counter="${comment.likesCounter}">${comment.likesCounter}</span>
+            <button class="like-button" ></button>
+          </div>
+        </div>
+      </li>`;
+  }).join(''); 
+     const appHtml = `<div class="container">
        <ul id="comments" class="comments">${commentsHtml} </ul>
     <div id= "addFormLoading" class="addFormLoading">
       <div id= "add-form" class="add-form">

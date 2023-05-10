@@ -24,7 +24,7 @@ export function getCommentsLoading(token) {
       let appComments = responseData.comments.map((comment) => {
       return {
         name: comment.author.name,
-        date: data (comment.date),
+        date: newDate(),
         text: comment.text,
         likesCounter: 0,
         
@@ -107,12 +107,13 @@ export function postComments({ nameInputElement, commentInputElement, token }) {
   })
 }
 
-export function loginUser({login, password}) {
+export function loginUser({login, password, token}) {
   return fetch( "https://webdev-hw-api.vercel.app/api/user/login", {
       method: "POST",
       body: JSON.stringify({ 
       login,
       password,
+      token,
       })
   }).then((response) => {
     if (response.status === 400) {
@@ -122,13 +123,14 @@ export function loginUser({login, password}) {
     })
   }
 
-  export function registerUser({name, login, password}) {
+  export function registerUser({name, login, password, token}) {
     return fetch( "https://webdev-hw-api.vercel.app/api/user", {
         method: "POST",
         body: JSON.stringify({
         name,
         login,
-        password
+        password,
+        token,
         })
     }).then((response) => {
       if (response.status === 400) {

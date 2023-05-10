@@ -95,7 +95,6 @@ export function renderLoginComponent({ appEl, setToken }) {
     document.getElementById("toggle-button").addEventListener('click', () => {
       isLoginMode = !isLoginMode;
       renderForm();
-      renderComments();
     })
   };
 
