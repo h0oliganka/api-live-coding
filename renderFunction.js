@@ -3,15 +3,14 @@ import { fetchAndRenderCommentsTwo } from "./script.js";
 import { postComments } from "./api.js";
 import { renderLoginComponent } from "./login.js";
 
-export let token = "Bearer asb4c4boc86gasb4c4boc86g37w3cc3bo3b83k4g37k3bk3cg3c03ck4k";
-token = null;
+export let token = null;
 
 // рендер функция
 export const renderComments = () => {
   const appEl = document.getElementById("app")
   if (!token) {
     const commentsHtml = window.comments.map((comment) => {
-    return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
+      return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
     data-date= "${comment.date}" data-counter="${comment.likesCounter}">
           <div class="comment-header">
             <div>${comment.name}</div>
@@ -29,26 +28,27 @@ export const renderComments = () => {
             </div>
           </div>
         </li>`;
-    }).join(''); 
-    
- const appHtml = `
+    }).join('');
+
+    const appHtml = `
     <div class="container">
     <ul id="comments" class="comments">${commentsHtml} </ul>
     <div> Что бы добавить комментарий, <a id='authorization-link' href="#">авторизуйтесь</a></div>`
-    
+
     appEl.innerHTML = appHtml;
-    
-    document.getElementById('authorization-link').addEventListener('click',() =>{
-      renderLoginComponent({ appEl, setToken: (newToken) =>{
-        token = newToken
+
+    document.getElementById('authorization-link').addEventListener('click', () => {
+      renderLoginComponent({
+        appEl, setToken: (newToken) => {
+          token = newToken
         },
-        fetchAndRenderCommentsTwo, 
-        }); 
+        fetchAndRenderCommentsTwo,
+      });
     });
-       return;   
-}
-const commentsHtml = window.comments.map((comment) => {
-  return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
+    return;
+  }
+  const commentsHtml = window.comments.map((comment) => {
+    return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
   data-date= "${comment.date}" data-counter="${comment.likesCounter}">
         <div class="comment-header">
           <div>${comment.name}</div>
@@ -66,8 +66,8 @@ const commentsHtml = window.comments.map((comment) => {
           </div>
         </div>
       </li>`;
-  }).join(''); 
-     const appHtml = `<div class="container">
+  }).join('');
+  const appHtml = `<div class="container">
        <ul id="comments" class="comments">${commentsHtml} </ul>
     <div id= "addFormLoading" class="addFormLoading">
       <div id= "add-form" class="add-form">
@@ -89,73 +89,72 @@ const commentsHtml = window.comments.map((comment) => {
         </div>
       </div>`
 
-initEventListeners();
+  initEventListeners();
 
-appEl.innerHTML = appHtml;
+  appEl.innerHTML = appHtml;
 
-const buttonElement = document.getElementById("add-button");
-const nameInputElement = document.getElementById("name-input");
-const commentInputElement = document.getElementById("comment-input");
+  const buttonElement = document.getElementById("add-button");
+  const nameInputElement = document.getElementById("name-input");
+  const commentInputElement = document.getElementById("comment-input");
 
-// проверка ввода
-buttonElement.addEventListener("click", () => {
-  nameInputElement.classList.remove('error');
+  // проверка ввода
+  buttonElement.addEventListener("click", () => {
+    nameInputElement.classList.remove('error');
 
-  if (nameInputElement.value === '') {
-    nameInputElement.classList.add('error');
-    return;
-  }
+    if (nameInputElement.value === '') {
+      nameInputElement.classList.add('error');
+      return;
+    }
 
-  commentInputElement.classList.remove('error');
+    commentInputElement.classList.remove('error');
 
-  if (commentInputElement.value === '') {
-    commentInputElement.classList.add('error');
-    return;
-  }
+    if (commentInputElement.value === '') {
+      commentInputElement.classList.add('error');
+      return;
+    }
 
-  // рендер нового коммента
-  comments.push({
-    name: nameInputElement.value
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;"),
-    date: newDate(),
-    text: commentInputElement.value
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;"),
-    likesCounter: 0,
-  });
-  // addForm.parentNode.appendChild(addFormLoading, addForm);
-
-  // POST
-  const postAndRenderComments = () => {
+    // рендер нового коммента
+    comments.push({
+      name: nameInputElement.value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;"),
+      date: newDate(),
+      text: commentInputElement.value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;"),
+      likesCounter: 0,
+    });
     // addForm.parentNode.appendChild(addFormLoading, addForm);
 
-    return postComments({ nameInputElement, commentInputElement })
-      .then(() => {
-        // return addFormLoading.parentNode.appendChild(addForm, addFormLoading);
-      })
-      .then(() => {
-        return fetchAndRenderCommentsTwo();
+    // POST
+    const postAndRenderComments = () => {
+      // addForm.parentNode.appendChild(addFormLoading, addForm);
 
-      }).then(() => {
-        // return addFormLoading.parentNode.appendChild(addForm, addFormLoading);
+      return postComments({ nameInputElement, commentInputElement })
+        .then(() => {
+          // return addFormLoading.parentNode.appendChild(addForm, addFormLoading);
+        })
+        .then(() => {
+          return fetchAndRenderCommentsTwo();
 
-      }).catch((error) => {
-        // addFormLoading.parentNode.appendChild(addForm, addFormLoading);
-        alert('Ошибка интернет соединения');
-        console.warn(error);
-      });
-  }
-  postAndRenderComments();
+        }).then(() => {
+          // return addFormLoading.parentNode.appendChild(addForm, addFormLoading);
 
-  nameInputElement.value = '';
-  commentInputElement.value = '';
+        }).catch((error) => {
+          // addFormLoading.parentNode.appendChild(addForm, addFormLoading);
+          console.warn(error);
+        });
+    }
+    postAndRenderComments();
 
-  renderComments();
-  initEventListeners();
-});
+    nameInputElement.value = '';
+    commentInputElement.value = '';
+
+    renderComments();
+    initEventListeners();
+  });
 }

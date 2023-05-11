@@ -1,13 +1,6 @@
 import { renderComments } from "./renderFunction.js";
 import { getCommentsLoading, getComments, postComments, host } from "./api.js";
 
-const buttonElement = document.getElementById("add-button");
-const commentsElement = document.getElementById("comments");
-const nameInputElement = document.getElementById("name-input");
-const commentInputElement = document.getElementById("comment-input");
-let addForm = document.getElementById("add-form");
-const commentsLoading = document.getElementById("commentsLoading")
-
 // // GET
 // export const fetchAndRenderComment = () => {
 //   commentsElement.parentNode.replaceChild(commentsLoading);
@@ -41,6 +34,7 @@ export const initEventListeners = () => {
     commentAnswer.addEventListener('click', () => {
       const text = commentAnswer.dataset.text;
       const nameComment = commentAnswer.dataset.name;
+      const commentInputElement = document.getElementById("comment-input");
       commentInputElement.value = ">" + text + "\n" + nameComment;
     });
   }

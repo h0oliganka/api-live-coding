@@ -100,6 +100,7 @@ export function postComments({ nameInputElement, commentInputElement, token }) {
       return response.json();
     }
     if (response.status === 500) {
+      alert('Сервер сломался, попробуй позже');
       throw new Error('Сервер сломался, попробуй позже');
     } if (response.status === 400) {
       alert("Имя и комментарий должны быть не короче 3 символов");
@@ -117,6 +118,7 @@ export function loginUser({ login, password, token }) {
     })
   }).then((response) => {
     if (response.status === 400) {
+      alert('Неверный логин или пароль')
       throw new Error('Неверный логин или пароль');
     }
     return response.json();
