@@ -61,12 +61,10 @@ export function getComments(token) {
       let appComments = responseData.comments.map((comment) => {
         return {
           name: comment.author.name,
-          date: newDate(),
+          date: comment.date,
           text: comment.text,
           likesCounter: 0,
-
         }
-
       })
       comments = appComments;
       renderComments();
@@ -76,8 +74,6 @@ export function getComments(token) {
 
   })
 }
-
-
 
 // POST
 export function postComments({ nameInputElement, commentInputElement, token }) {
@@ -107,6 +103,7 @@ export function postComments({ nameInputElement, commentInputElement, token }) {
     }
   })
 }
+
 //вход
 export function loginUser({ login, password, token }) {
   return fetch("https://webdev-hw-api.vercel.app/api/user/login", {
