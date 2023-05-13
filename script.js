@@ -44,16 +44,16 @@ export const initEventListeners = () => {
 window.comments = [];
 
 // дата и время комментария
-export function newDate() {
-  let date = new Date();
+export function newDate(comment) {
+  let date = new Date(comment);
   let monthArray = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
   let myMinute = String(date.getMinutes()).length < 2 ? '0' + date.getMinutes() : date.getMinutes();
   let myHours = String(date.getHours()).length < 2 ? '0' + date.getHours() : date.getHours();
   let myDay = String(date.getDate()).length < 2 ? '0' + date.getDate() : date.getDate();
   let myMonth = monthArray[+date.getMonth()];
   let myYear = String(date.getFullYear()).slice(2);
-  let str = myDay + '.' + myMonth + '.' + myYear + '.' + myHours + '.' + myMinute;
+  let str = myDay + '.' + myMonth + '.' + myYear + ' ' + myHours + ':' + myMinute;
   return str;
 }
-// renderComments();
+renderComments();
 initEventListeners();

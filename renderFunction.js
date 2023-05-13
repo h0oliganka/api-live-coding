@@ -76,6 +76,7 @@ export const renderComments = () => {
           id="name-input"
           class="add-form-name"
           placeholder="Введите ваше имя"
+          
         />
         <textarea
           type="textarea"
@@ -142,8 +143,11 @@ export const renderComments = () => {
           return fetchAndRenderCommentsTwo();
 
         }).then(() => {
+          if (response.status === 500) {
+            alert('Сервер сломался, попробуй позже');
+            throw new Error('Сервер сломался, попробуй позже');
+          } 
           // return addFormLoading.parentNode.appendChild(addForm, addFormLoading);
-
         }).catch((error) => {
           // addFormLoading.parentNode.appendChild(addForm, addFormLoading);
           console.warn(error);

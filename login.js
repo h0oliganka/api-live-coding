@@ -1,5 +1,5 @@
 import { loginUser, registerUser } from "./api.js";
-import { fetchAndRenderCommentsTwo } from "./script.js";
+import { fetchAndRenderCommentsTwo, initEventListeners } from "./script.js";
 import { renderComments, } from "./renderFunction.js";
 
 export function renderLoginComponent({ appEl, setToken }) {
@@ -57,7 +57,7 @@ export function renderLoginComponent({ appEl, setToken }) {
       }).then((user) => {
         console.log(user);
         setToken(`Bearer ${user.user.token}`);
-        renderComments();
+        renderComments(app, initEventListeners, comments);
         fetchAndRenderCommentsTwo();
       })
       } else {
