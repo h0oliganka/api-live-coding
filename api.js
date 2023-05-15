@@ -24,7 +24,7 @@ export function getCommentsLoading(token) {
       let appComments = responseData.comments.map((comment) => {
         return {
           name: comment.author.name,
-          date: newDate(),
+          date: newDate(comment),
           text: comment.text,
           likesCounter: 0,
         }
@@ -57,12 +57,10 @@ export function getComments(token) {
       let appComments = responseData.comments.map((comment) => {
         return {
           name: comment.author.name,
-          date: newDate(),
+          date: newDate(comment.date),
           text: comment.text,
           likesCounter: 0,
-
         }
-
       })
       comments = appComments;
       renderComments();
@@ -72,8 +70,6 @@ export function getComments(token) {
 
   })
 }
-
-
 
 // POST
 export function postComments({ nameInputElement, commentInputElement, token }) {
@@ -91,18 +87,18 @@ export function postComments({ nameInputElement, commentInputElement, token }) {
     },
   }).then((response) => {
     if (response.status === 201) {
-      nameInputElement.value = "";
-      commentInputElement.value = "";
       return response.json();
     }
-    if (response.status === 500) {
+      if (response.status === 500) {
       alert('Сервер сломался, попробуй позже');
       throw new Error('Сервер сломался, попробуй позже');
-    } if (response.status === 400) {
+    } 
+      if (response.status === 400) {
       alert("Имя и комментарий должны быть не короче 3 символов");
     }
   })
 }
+
 //вход
 export function loginUser({ login, password, token }) {
   return fetch("https://webdev-hw-api.vercel.app/api/user/login", {
@@ -126,7 +122,7 @@ export function registerUser({ name, login, password, token }) {
   return fetch("https://webdev-hw-api.vercel.app/api/user", {
     method: "POST",
     body: JSON.stringify({
-      name,
+      login: name,
       login,
       password,
       token,

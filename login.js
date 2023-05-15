@@ -1,5 +1,5 @@
 import { loginUser, registerUser } from "./api.js";
-import { fetchAndRenderCommentsTwo } from "./script.js";
+import { fetchAndRenderCommentsTwo, initEventListeners } from "./script.js";
 import { renderComments, } from "./renderFunction.js";
 
 export function renderLoginComponent({ appEl, setToken }) {
@@ -40,26 +40,26 @@ export function renderLoginComponent({ appEl, setToken }) {
            `
     appEl.innerHTML = appHtml;
     document.getElementById('login-button').addEventListener('click', () => {
-      if (isLoginMode) {
-        const login = document.getElementById('login-input').value;
-        const password = document.getElementById('password-input').value;
-        if (!login) {
-          alert("Введите логин")
-          return;
-        }
-        if (!password) {
-          alert("Введите пароль")
-          return;
-        }
-        loginUser({
-          login: login,
-          password: password,
-        }).then((user) => {
-          console.log(user);
-          setToken(`Bearer ${user.user.token}`);
-          renderComments();
-          fetchAndRenderCommentsTwo();
-        })
+      if(isLoginMode) {
+      const login = document.getElementById('login-input').value;
+      const password = document.getElementById('password-input').value;
+      if (!login) {
+        alert("Введите логин")
+        return;
+      }
+      if (!password) {
+        alert("Введите пароль")
+        return;
+      }
+      loginUser({
+        login: login,
+        password: password,
+      }).then((user) => {
+        console.log(user);
+        setToken(`Bearer ${user.user.token}`);
+        renderComments();
+        fetchAndRenderCommentsTwo();
+      })
       } else {
         const name = document.getElementById('name-input').value;
         const login = document.getElementById('login-input').value;
