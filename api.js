@@ -27,16 +27,12 @@ export function getCommentsLoading(token) {
           date: newDate(),
           text: comment.text,
           likesCounter: 0,
-
         }
-
       })
       window.comments = appComments;
       renderComments();
       initEventListeners();
-
     });
-
   }).then(() => {
     return commentsLoading.parentNode.replaceChild(commentsElement, commentsLoading);
 

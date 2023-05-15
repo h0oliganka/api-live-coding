@@ -1,0 +1,22 @@
+{
+  "name": "api-live-coding",
+  "version": "1.0.0",
+  "description": "",
+  "main": "api.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "regenerator-runtime": "^0.13.11"
+  },
+  "devDependencies": {
+    "date-fns": "^2.30.0",
+    "webpack": "^5.82.1",
+    "webpack-cli": "^5.1.1"
+  },
+  "scripts": {
+    "dev": "webpack --mode development --watch"
+  },
+  "author": "",
+  "license": "ISC"
+}

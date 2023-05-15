@@ -51,8 +51,8 @@ export function newDate() {
   let myHours = String(date.getHours()).length < 2 ? '0' + date.getHours() : date.getHours();
   let myDay = String(date.getDate()).length < 2 ? '0' + date.getDate() : date.getDate();
   let myMonth = monthArray[+date.getMonth()];
-  let myYear = String(date.getFullYear()).slice(2);
-  let str = myDay + '.' + myMonth + '.' + myYear + '.' + myHours + '.' + myMinute;
+  let myYear = String(date.getFullYear());
+  let str = myDay + '.' + myMonth + '.' + myYear + ' ' + myHours + ':' + myMinute;
   return str;
 }
 // renderComments();

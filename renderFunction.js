@@ -2,6 +2,8 @@ import { initEventListeners, newDate } from "./script.js";
 import { fetchAndRenderCommentsTwo } from "./script.js";
 import { postComments } from "./api.js";
 import { renderLoginComponent } from "./login.js";
+import { formatDateToRu, formatDateToUs } from "./lib/formatDate/formatDate.js";
+import { format } from "date-fns";
 
 export let token = null;
 
@@ -9,12 +11,14 @@ export let token = null;
 export const renderComments = () => {
   const appEl = document.getElementById("app")
   if (!token) {
-    const commentsHtml = window.comments.map((comment) => {
-      return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
-    data-date= "${comment.date}" data-counter="${comment.likesCounter}">
+    const commentsHtml = window.comments
+      .map((comment) => {
+        const createDate = format(new Date(task.created_at), 'dd/MM/yyyy hh:mm');
+        return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
+    data-date= "${createDate}" data-counter="${comment.likesCounter}">
           <div class="comment-header">
             <div>${comment.name}</div>
-            <div>${comment.date}</div>
+            <div>${createDate}</div>
           </div>
           <div class="comment-body">
             <div  class="comment-text" >
@@ -28,7 +32,7 @@ export const renderComments = () => {
             </div>
           </div>
         </li>`;
-    }).join('');
+      }).join('');
 
     const appHtml = `
     <div class="container">
