@@ -7,6 +7,7 @@
     "lib": "lib"
   },
   "dependencies": {
+    "lodash": "^4.17.21",
     "regenerator-runtime": "^0.13.11"
   },
   "devDependencies": {

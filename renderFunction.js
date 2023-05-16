@@ -14,10 +14,10 @@ export const renderComments = () => {
     const commentsHtml = window.comments
       .map((comment) => {
         return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
-    data-date= "${createDate}" data-counter="${comment.likesCounter}">
+    data-date= "${comment.date}" data-counter="${comment.likesCounter}">
           <div class="comment-header">
             <div>${comment.name}</div>
-            <div>${createDate}</div>
+            <div>${comment.date}</div>
           </div>
           <div class="comment-body">
             <div  class="comment-text" >
@@ -115,23 +115,6 @@ export const renderComments = () => {
       commentInputElement.classList.add('error');
       return;
     }
-
-    // рендер нового коммента
-    comments.push({
-      name: nameInputElement.value
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;"),
-      date: newDate(),
-      text: commentInputElement.value
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;"),
-      likesCounter: 0,
-    });
-    // addForm.parentNode.appendChild(addFormLoading, addForm);
 
     // POST
     const postAndRenderComments = () => {

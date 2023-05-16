@@ -1,4 +1,3 @@
-import { newDate } from "./script.js";
 import { renderComments } from "./renderFunction.js";
 import { initEventListeners } from "./script.js";
 import { format } from "date-fns";
@@ -10,7 +9,7 @@ export function getComments() {
   return fetch(host, {
     method: "GET",
     headers: {
-     
+
     },
   }).then((response) => {
     const jsonPromise = response.json();
@@ -19,7 +18,7 @@ export function getComments() {
       let appComments = responseData.comments.map((comment) => {
         return {
           name: comment.author.name,
-          date: format(newDate(comment.date), 'yyyy-MM-dd hh:mm:ss'),
+          date: format(new Date(comment.date), 'yyyy.MM.dd hh:mm:ss'),
           text: comment.text,
           likesCounter: 0,
         }
@@ -41,9 +40,17 @@ export function postComments({ nameInputElement, commentInputElement, token }) {
   return fetch(host, {
     method: "POST",
     body: JSON.stringify({
-      name: nameInputElement.value,
-      text: commentInputElement.value,
-      date: format(newDate(), 'yyyy-MM-dd hh:mm:ss'),
+      name: _.capitalize(nameInputElement.value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;"),
+      text: commentInputElement.value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;"),
+      date: format(new Date(), 'yyyy.MM.dd hh:mm:ss'),
       likesCounter: 0,
     }),
     headers: {
@@ -53,11 +60,11 @@ export function postComments({ nameInputElement, commentInputElement, token }) {
     if (response.status === 201) {
       return response.json();
     }
-      if (response.status === 500) {
+    if (response.status === 500) {
       alert('Сервер сломался, попробуй позже');
       throw new Error('Сервер сломался, попробуй позже');
-    } 
-      if (response.status === 400) {
+    }
+    if (response.status === 400) {
       alert("Имя и комментарий должны быть не короче 3 символов");
     }
   })
@@ -70,7 +77,6 @@ export function loginUser({ login, password, token }) {
     body: JSON.stringify({
       login,
       password,
-      token,
     })
   }).then((response) => {
     if (response.status === 400) {
@@ -86,8 +92,8 @@ export function registerUser({ name, login, password, token }) {
   return fetch("https://webdev-hw-api.vercel.app/api/user", {
     method: "POST",
     body: JSON.stringify({
-      login: name,
       login,
+      name,
       password,
       token,
     })
