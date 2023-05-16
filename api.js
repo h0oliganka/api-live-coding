@@ -1,54 +1,16 @@
 import { newDate } from "./script.js";
 import { renderComments } from "./renderFunction.js";
 import { initEventListeners } from "./script.js";
+import { format } from "date-fns";
 
-const commentsElement = document.getElementById("comments");
 export let host = "https://webdev-hw-api.vercel.app/api/v1/dasha-salova/comments";
 
 // GET
-export function getCommentsLoading(token) {
+export function getComments() {
   return fetch(host, {
     method: "GET",
     headers: {
-      Authorization: token,
-    }
-  }).then((response) => {
-    if (response.status === 401) {
-      // token = prompt("Введите верный пароль");
-      // getCommentsLoading();
-      throw new Error("Нет авторизации");
-    }
-    const jsonPromise = response.json();
-    jsonPromise.then((responseData) => {
-
-      let appComments = responseData.comments.map((comment) => {
-        return {
-          name: comment.author.name,
-          date: newDate(comment),
-          text: comment.text,
-          likesCounter: 0,
-        }
-      })
-      window.comments = appComments;
-      renderComments();
-      initEventListeners();
-    });
-  }).then(() => {
-    return commentsLoading.parentNode.replaceChild(commentsElement, commentsLoading);
-
-  }).catch((error) => {
-
-    alert('Кажется, у вас сломался интернет, попробуйте позже');
-    console.warn(error);
-  });
-}
-
-// 2 GET
-export function getComments(token) {
-  return fetch(host, {
-    method: "GET",
-    headers: {
-      Authorization: token,
+     
     },
   }).then((response) => {
     const jsonPromise = response.json();
@@ -57,7 +19,7 @@ export function getComments(token) {
       let appComments = responseData.comments.map((comment) => {
         return {
           name: comment.author.name,
-          date: newDate(comment.date),
+          date: format(newDate(comment.date), 'yyyy-MM-dd hh:mm:ss'),
           text: comment.text,
           likesCounter: 0,
         }
@@ -67,8 +29,11 @@ export function getComments(token) {
       initEventListeners();
       console.log(window.comments);
     });
+  }).catch((error) => {
 
-  })
+    alert('Кажется, у вас сломался интернет, попробуйте позже');
+    console.warn(error);
+  });
 }
 
 // POST
@@ -78,9 +43,8 @@ export function postComments({ nameInputElement, commentInputElement, token }) {
     body: JSON.stringify({
       name: nameInputElement.value,
       text: commentInputElement.value,
-      date: newDate(),
+      date: format(newDate(), 'yyyy-MM-dd hh:mm:ss'),
       likesCounter: 0,
-      forceError: true,
     }),
     headers: {
       Authorization: token,

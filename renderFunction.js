@@ -13,7 +13,6 @@ export const renderComments = () => {
   if (!token) {
     const commentsHtml = window.comments
       .map((comment) => {
-        const createDate = format(new Date(task.created_at), 'dd/MM/yyyy hh:mm');
         return ` <li class="comment" data-text="${comment.text}" data-name="${comment.name}"
     data-date= "${createDate}" data-counter="${comment.likesCounter}">
           <div class="comment-header">
@@ -80,7 +79,6 @@ export const renderComments = () => {
           id="name-input"
           class="add-form-name"
           placeholder="Введите ваше имя"
-          
         />
         <textarea
           type="textarea"
@@ -150,7 +148,7 @@ export const renderComments = () => {
           if (response.status === 500) {
             alert('Сервер сломался, попробуй позже');
             throw new Error('Сервер сломался, попробуй позже');
-          } 
+          }
           // return addFormLoading.parentNode.appendChild(addForm, addFormLoading);
         }).catch((error) => {
           // addFormLoading.parentNode.appendChild(addForm, addFormLoading);

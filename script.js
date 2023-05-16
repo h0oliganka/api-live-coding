@@ -1,18 +1,11 @@
 import { renderComments } from "./renderFunction.js";
 import { getCommentsLoading, getComments, postComments, host } from "./api.js";
 
-// // GET
-// export const fetchAndRenderComment = () => {
-//   commentsElement.parentNode.replaceChild(commentsLoading);
-//   return getCommentsLoading();
-// }
-
 // 2 get
 export const fetchAndRenderCommentsTwo = () => {
   return getComments();
 }
 
-// fetchAndRenderComment();
 fetchAndRenderCommentsTwo();
 
 // кнопка лайка и счетчик
